@@ -1,0 +1,103 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Gestión de Productos</h2>
+
+  <form (ngSubmit)="agregarProducto()" #form="ngForm" class="mb-4">
+    <div class="row">
+      <div class="col-md-2">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nombre"
+          name="nombre"
+          [(ngModel)]="nuevoProducto.nombre"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label for="categoria" class="form-label">Categoría</label>
+        <input
+          type="text"
+          class="form-control"
+          id="categoria"
+          name="categoria"
+          [(ngModel)]="nuevoProducto.categoria"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label for="precio" class="form-label">Precio</label>
+        <input
+          type="number"
+          class="form-control"
+          id="precio"
+          name="precio"
+          [(ngModel)]="nuevoProducto.precio"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label for="stock" class="form-label">Stock</label>
+        <input
+          type="number"
+          class="form-control"
+          id="stock"
+          name="stock"
+          [(ngModel)]="nuevoProducto.stock"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label for="imagenUrl" class="form-label">URL Imagen</label>
+        <input
+          type="text"
+          class="form-control"
+          id="imagenUrl"
+          name="imagenUrl"
+          [(ngModel)]="nuevoProducto.imagenUrl"
+        />
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-primary w-100" type="submit">
+          {{ editando ? 'Actualizar' : 'Agregar' }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos">
+        <td>{{ producto.id }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.categoria }}</td>
+        <td>{{ producto.precio | currency }}</td>
+        <td>{{ producto.stock }}</td>
+        <td>
+          <img [src]="producto.imagenUrl" width="60" height="60" *ngIf="producto.imagenUrl; else noImg" />
+          <ng-template #noImg><span class="text-muted">Sin imagen</span></ng-template>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editarProducto(producto)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="eliminarProducto(producto.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

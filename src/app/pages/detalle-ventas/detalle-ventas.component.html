@@ -1,0 +1,101 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Detalle de Ventas</h2>
+
+  <form (ngSubmit)="guardarDetalle()" #form="ngForm" class="mb-4">
+    <div class="row">
+      <div class="col-md-2">
+        <label for="ventaId" class="form-label">Venta ID</label>
+        <input
+          type="number"
+          class="form-control"
+          id="ventaId"
+          name="ventaId"
+          [(ngModel)]="nuevoDetalle.ventaId"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label for="productoId" class="form-label">Producto ID</label>
+        <input
+          type="number"
+          class="form-control"
+          id="productoId"
+          name="productoId"
+          [(ngModel)]="nuevoDetalle.productoId"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label for="cantidad" class="form-label">Cantidad</label>
+        <input
+          type="number"
+          class="form-control"
+          id="cantidad"
+          name="cantidad"
+          [(ngModel)]="nuevoDetalle.cantidad"
+          (input)="calcularSubtotal()"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label for="precio" class="form-label">Precio Unitario</label>
+        <input
+          type="number"
+          class="form-control"
+          id="precio"
+          name="precioUnitario"
+          [(ngModel)]="nuevoDetalle.precioUnitario"
+          (input)="calcularSubtotal()"
+          required
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">Subtotal</label>
+        <input
+          type="number"
+          class="form-control"
+          [value]="nuevoDetalle.cantidad * nuevoDetalle.precioUnitario"
+          readonly
+        />
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-primary w-100" type="submit">
+          {{ editando ? 'Actualizar' : 'Agregar' }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Venta ID</th>
+        <th>Producto ID</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let detalle of detalles">
+        <td>{{ detalle.id }}</td>
+        <td>{{ detalle.ventaId }}</td>
+        <td>{{ detalle.productoId }}</td>
+        <td>{{ detalle.cantidad }}</td>
+        <td>{{ detalle.precioUnitario | currency }}</td>
+        <td>{{ detalle.subtotal | currency }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="editarDetalle(detalle)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="eliminarDetalle(detalle.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
